@@ -3,7 +3,7 @@ using namespace std;
 class wektor
 {
 public:
-    wektor() : dlugosc(0), pojemnosc(0) { w = new double[dlugosc]; }
+    double* w;
     wektor(int n) : dlugosc(n), pojemnosc(n)
     {
         w = new double[dlugosc];
@@ -16,22 +16,24 @@ public:
     void zmien_dlugosc(int n1)
     {
         if (n1 <= get_pojemnosc()) {
-            dlugosc = n1;
-            for (int i = n1 + 1; i <= get_pojemnosc(); ++i) {
-                delete &w[i];
+            for (int i = n1; i < get_pojemnosc(); ++i) {
+                w[i] = 0.;
             }
+            dlugosc = n1;
         }
         else {
-            dlugosc   = n1;
-            double* p = new double[dlugosc];
+            double* wekt;
+            wekt = w;
+            w    = new double[n1];
             for (int i = 0; i < get_pojemnosc(); ++i) {
-                p[i] = w[i];
+                w[i] = wekt[i];
             }
             for (int i = dlugosc; i < get_pojemnosc(); ++i) {
-                p[i] = 0.;
+                w[i] = 0.;
             }
-
-            delete[] w;
+            dlugosc   = n1;
+            pojemnosc = n1;
+            delete[] wekt;
         }
     }
 
@@ -42,13 +44,10 @@ public:
         }
     }
     ~wektor() { delete[] w; }
-    wektor& operator=(const wektor&) { return *this; }
-    wektor  get_wektor() { return wektor(); }
 
 private:
-    int     dlugosc;
-    double* w;
-    int     pojemnosc;
+    int dlugosc;
+    int pojemnosc;
 };
 
 int main()
@@ -57,5 +56,22 @@ int main()
     w1.print();
     cout << " " << endl;
     w1.zmien_dlugosc(7);
+    w1.w[0] = 5;
+    w1.w[1] = 5;
+    w1.w[2] = 5;
+    w1.w[3] = 5;
+    w1.w[4] = 5;
+    w1.w[5] = 5;
+    w1.w[6] = 5;
     w1.print();
+    cout << " " << endl;
+    w1.zmien_dlugosc(3);
+    w1.print();
+    cout << " " << endl;
+    w1.zmien_dlugosc(10);
+    w1.print();
+    cout << " " << endl;
+    w1.zmien_dlugosc(6);
+    w1.print();
+    cout << w1.get_dlugosc() << " " << w1.get_pojemnosc() << endl;
 }

@@ -3,7 +3,6 @@ using namespace std;
 class wektor
 {
 public:
-    double* w;
     wektor(int n) : dlugosc(n), pojemnosc(n)
     {
         w = new double[dlugosc];
@@ -44,10 +43,21 @@ public:
         }
     }
     ~wektor() { delete[] w; }
+    double& operator[](int i)
+    {
+        if (i > get_dlugosc()) {
+            zmien_dlugosc(i + 1);
+            return w[i];
+        }
+        else {
+            return w[i];
+        }
+    }
 
 private:
-    int dlugosc;
-    int pojemnosc;
+    int     dlugosc;
+    int     pojemnosc;
+    double* w;
 };
 
 int main()
@@ -56,13 +66,11 @@ int main()
     w1.print();
     cout << " " << endl;
     w1.zmien_dlugosc(7);
-    w1.w[0] = 5;
-    w1.w[1] = 5;
-    w1.w[2] = 5;
-    w1.w[3] = 5;
-    w1.w[4] = 5;
-    w1.w[5] = 5;
-    w1.w[6] = 5;
+    w1[0] = 5;
+    w1[1] = 5;
+    w1[2] = 5;
+    w1[3] = 5;
+    w1[4] = 5;
     w1.print();
     cout << " " << endl;
     w1.zmien_dlugosc(3);
@@ -72,6 +80,10 @@ int main()
     w1.print();
     cout << " " << endl;
     w1.zmien_dlugosc(6);
+    w1.print();
+    cout << w1.get_dlugosc() << " " << w1.get_pojemnosc() << endl;
+    cout << " " << endl;
+    w1[9] = 69;
     w1.print();
     cout << w1.get_dlugosc() << " " << w1.get_pojemnosc() << endl;
 }

@@ -3,12 +3,17 @@ using namespace std;
 class wektor
 {
 public:
-    wektor(int n) : dlugosc(n), pojemnosc(n)
+    wektor(int n) : dlugosc{n}, pojemnosc{n}
     {
         w = new double[dlugosc];
         for (int i = 0; i < dlugosc; ++i) {
             w[i] = 0.;
         }
+    }
+    wektor(wektor& v) : dlugosc{v.get_dlugosc()}, pojemnosc{v.get_pojemnosc()}
+    {
+        w = new double[dlugosc];
+        w = v.w;
     }
     int  get_dlugosc() { return dlugosc; }
     int  get_pojemnosc() { return pojemnosc; }
@@ -43,6 +48,7 @@ public:
         }
     }
     ~wektor() { delete[] w; }
+    wektor& operator=(const wektor&) { return *this; }
     double& operator[](int i)
     {
         if (i > get_dlugosc()) {
@@ -63,6 +69,8 @@ private:
 int main()
 {
     wektor w1(5);
+
+    cout << " " << endl;
     w1.print();
     cout << " " << endl;
     w1.zmien_dlugosc(7);
@@ -86,4 +94,7 @@ int main()
     w1[9] = 69;
     w1.print();
     cout << w1.get_dlugosc() << " " << w1.get_pojemnosc() << endl;
+    wektor w2{w1};
+    cout << " " << endl;
+    w2.print();
 }

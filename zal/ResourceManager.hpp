@@ -34,7 +34,7 @@ class ResourceManager
             delete obkt; 
             obkt = a.obkt;
             a.obkt = nullptr;
-            return *this}
+            return *this;}
           else
           {return *this;}
     }//przenoszący operator przypisania

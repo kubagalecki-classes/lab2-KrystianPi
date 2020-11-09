@@ -8,7 +8,7 @@ class ResourceManager
   public:
     
     double get(){
-      return obkt.get(); 
+      return obkt->get(); 
     } 
     ResourceManager(){
       obkt = new Resource; 
@@ -18,20 +18,20 @@ class ResourceManager
     }//destruktor
     ResourceManager(const ResourceManager& a){
       obkt = new Resource
-      obkt = a.obkt; 
+      *obkt = *a.obkt; 
     }// konstruktor kopiujący
     ResourceManager(ResourceManager&& a){
-      *this = move(a);
+      *this = move(obkt.a);
       a.obkt = nullptr; 
     }//konstruktor przenoszący
     ResourceManager& operator=(const ResourceManager& a){
       if (this != &a)
-            obkt = a.obkt;
+            *obkt = *a.obkt;
         return *this;
     }//kopiujący operator przypisania 
     ResourceManager& operator=(const ResourceManager&& a){
       if (this != &a){
-            obkt = move(a);
+            obkt = move(obkt.a);
             a.obkt = nullptr;}
           else
           {return *this;}

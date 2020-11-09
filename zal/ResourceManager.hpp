@@ -16,11 +16,11 @@ class ResourceManager
     ~ResourceManager(){
       delete obkt; 
     }//destruktor
-    ResourceManager(const ResourceManager& a){
+    ResourceManager(const ResourceManager & a){
       obkt = new Resource
       *obkt = *a.obkt; 
     }// konstruktor kopiujący
-    ResourceManager(ResourceManager&& a){
+    ResourceManager(ResourceManager && a){
        obkt = a.obkt;
        a.obkt = nullptr; 
     }//konstruktor przenoszący

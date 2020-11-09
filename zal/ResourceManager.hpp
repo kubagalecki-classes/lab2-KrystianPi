@@ -29,7 +29,7 @@ class ResourceManager
             *obkt = *a.obkt;
         return *this;
     }//kopiujący operator przypisania 
-    ResourceManager& operator=(const ResourceManager&& a){
+    ResourceManager& operator=(ResourceManager&& a){
       if (this != &a){
             delete obkt; 
             obkt = a.obkt;

@@ -15,7 +15,7 @@ class ResourceManager
       delete obkt; 
     }//destruktor
     ResourceManager(const ResourceManager & a){
-      obkt = new Resource
+      obkt = new Resource;
       obkt = a.obkt; 
     }// konstruktor kopiujący
     ResourceManager(ResourceManager && a){

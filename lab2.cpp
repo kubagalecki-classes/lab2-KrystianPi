@@ -3,17 +3,23 @@ using namespace std;
 class wektor
 {
 public:
-    wektor(int n) : dlugosc{n}, pojemnosc{n}
+    wektor(int n) : dlugosc{n}, pojemnosc{n} // konstruktor parametryczny
     {
         w = new double[dlugosc];
         for (int i = 0; i < dlugosc; ++i) {
             w[i] = 0.;
         }
     }
-    wektor(wektor& v) : dlugosc{v.get_dlugosc()}, pojemnosc{v.get_pojemnosc()}
+    wektor(wektor& v)
+        : dlugosc{v.get_dlugosc()}, pojemnosc{v.get_pojemnosc()} // konstruktor kopiujący
     {
         w = new double[dlugosc];
         w = v.w;
+    }
+    wektor(wektor&& v) // konstruktor przenoszący
+    {
+        *this = move(v);
+        v.w   = nullptr;
     }
     int  get_dlugosc() { return dlugosc; }
     int  get_pojemnosc() { return pojemnosc; }
@@ -47,9 +53,14 @@ public:
             cout << w[i] << endl;
         }
     }
-    ~wektor() { delete[] w; }
-    wektor& operator=(const wektor&) { return *this; }
-    double& operator[](int i)
+    ~wektor() { delete[] w; }          // destruktor
+    wektor& operator=(const wektor& v) // operator przypisania
+    {
+        if (this != &v)
+            w = v.w;
+        return *this;
+    }
+    double& operator[](int i) // operator wyłuskania
     {
         if (i > get_dlugosc()) {
             zmien_dlugosc(i + 1);
@@ -69,7 +80,6 @@ private:
 int main()
 {
     wektor w1(5);
-
     cout << " " << endl;
     w1.print();
     cout << " " << endl;
@@ -91,10 +101,14 @@ int main()
     w1.print();
     cout << w1.get_dlugosc() << " " << w1.get_pojemnosc() << endl;
     cout << " " << endl;
-    w1[9] = 69;
+    w1[9] = 7;
     w1.print();
     cout << w1.get_dlugosc() << " " << w1.get_pojemnosc() << endl;
     wektor w2{w1};
     cout << " " << endl;
     w2.print();
+    cout << " " << endl;
+    wektor w3(5);
+    w3 = w2;
+    w3.print();
 }

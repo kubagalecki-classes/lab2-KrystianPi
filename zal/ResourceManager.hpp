@@ -16,7 +16,7 @@ class ResourceManager
     }//destruktor
     ResourceManager(const ResourceManager & a){
       obkt = new Resource;
-      obkt = a.obkt; 
+      *obkt = *a.obkt; 
     }// konstruktor kopiujący
     ResourceManager(ResourceManager && a){
        obkt = a.obkt;
@@ -24,7 +24,7 @@ class ResourceManager
     }//konstruktor przenoszący
     ResourceManager& operator=(const ResourceManager& a){
       if (this != &a)
-            obkt = a.obkt;
+            *obkt = *a.obkt;
         return *this;
     }//kopiujący operator przypisania 
     ResourceManager& operator=(ResourceManager&& a){
